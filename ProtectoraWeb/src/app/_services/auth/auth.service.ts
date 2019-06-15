@@ -1,8 +1,10 @@
-import { Injectable, Output, EventEmitter } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { JwtResponse } from 'src/app/_models/jwtResponse';
 import { map } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
+
 
 
 @Injectable({
@@ -10,11 +12,7 @@ import { map } from 'rxjs/operators';
 })
 export class AuthService {
 
-/*   @Output() admin = new EventEmitter();
-  @Output() logged = new EventEmitter();
-  @Output() userLogged = new EventEmitter();*/
-
-  baseURL = 'http://localhost/ProtectoraWebApi/public/src';
+  baseURL = environment.baseURL;
 
   private currentUserSubject: BehaviorSubject<any>;
   // Controla que cambia el estado de conexión del usuario
@@ -26,8 +24,6 @@ export class AuthService {
   }
 
   public get currentUserValue() {
-/*     this.logged.emit(this.isLogged());
-    this.admin.emit(this.isAdmin()); */
     return this.currentUserSubject.value;
   }
 
@@ -43,16 +39,12 @@ export class AuthService {
   saveTokenLocalStorage(token) {
     localStorage.setItem('currentUser', JSON.stringify(token));
     this.currentUserSubject.next(token);
-/*     this.admin.emit(this.isAdmin());
-    this.logged.emit(this.isLogged());
-    this.userLogged.emit(this.userIdLogged());*/
     return token;
   }
 
   logOut() {
     localStorage.removeItem('currentUser');
     this.currentUserSubject.next(null);
-    // this.logged.emit(this.isLogged());
   }
 
   isAdmin() {
