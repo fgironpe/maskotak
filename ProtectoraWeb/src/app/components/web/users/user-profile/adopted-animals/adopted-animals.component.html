@@ -1,0 +1,16 @@
+
+<div class="row mt-2">
+  <div class="col-md-12 text-center">
+    <h1>Tus animales</h1>
+  </div>
+</div>
+  <div class="row cardContainer" *ngIf="animalList; else noAnimals">
+    <div class="col" *ngFor="let animal of animalList, let i = index">
+      <app-animal-card [animal]="animal" [index]="i" [from]="from"></app-animal-card>
+    </div>
+  </div>
+  <ng-template #noAnimals>
+      No tiene ningún animal adoptado o pre-adoptado.
+  </ng-template>
+
+  
